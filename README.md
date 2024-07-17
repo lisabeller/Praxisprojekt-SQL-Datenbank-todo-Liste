@@ -1,5 +1,4 @@
-<br><br><center><h2 style="font-size:3em">Praxisprojekt Datenbanken und SQL</h1></center>
-
+## Praxisprojekt Datenbanken und SQL
 - Ausführen des Skripts in Kommandozeile (Miniconda)
 - cd "PFAD"
 - streamlit run "Dateiname"
