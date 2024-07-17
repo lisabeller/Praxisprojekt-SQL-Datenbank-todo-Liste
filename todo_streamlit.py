@@ -1,7 +1,7 @@
 # Ausführen des Skripts in Kommandozeile (Miniconda)
 # cd "PFAD"
-# conda activate "Umgebung"
-# streamlit run  "Datei"
+# conda activate DataCraft
+# streamlit run  todo_streamlit.py
 
 # IMPORTE
 import streamlit as st
@@ -43,7 +43,7 @@ def main():
         st.subheader('Teammitglied hinzufügen')
         vorname = st.text_input('Vorname')
         nachname = st.text_input('Nachname')
-        rolle = st.text_input('Rolle')
+        rolle = st.text_input('Rolle')                                  # Dropdown Menu
         email = st.text_input('Email')
 
         if st.button('Teammitglied hinzufügen'):
@@ -56,8 +56,8 @@ def main():
         st.subheader('Aufgabe hinzufügen')
         aufgaben_name = st.text_input('Aufgabenname')
         aufgaben_beschreibung = st.text_area('Aufgabenbeschreibung')
-        projekt_id = st.number_input('Projekt ID', min_value=1)
-        mitarbeiter_id = st.number_input('Mitarbeiter ID', min_value=1)
+        projekt_id = st.number_input('Projekt ID', min_value=1)         # Dropdown Menu hinzufügen mit den bestehenden IDs
+        mitarbeiter_id = st.number_input('Mitarbeiter ID', min_value=1) # Dropdown Menu hinzufügen mit den bestehenden IDs
         status = st.selectbox('Status', ['Offen', 'In Bearbeitung', 'Erledigt'])
         faelligkeit = st.date_input('Fälligkeitsdatum')
 
@@ -73,7 +73,7 @@ def main():
 
     elif choice == 'Team anzeigen':
         st.subheader('Team anzeigen')
-        mitarbeiter_id = st.number_input('Mitarbeiter ID', min_value=1)
+        mitarbeiter_id = st.number_input('Mitarbeiter ID', min_value=1)     # Dropdown mit vorhanden Mitarbeiter-IDs
 
         if st.button('Info anzeigen'):
             mitarbeiter_info = func.get_info(mitarbeiter_id)
@@ -85,3 +85,7 @@ def main():
 # Main-Funktion aufrufen
 if __name__ == '__main__':
     main()
+
+# Funktion Status ändern
+# Tabellen anzeigen lassen mit Dropdown
+# 
