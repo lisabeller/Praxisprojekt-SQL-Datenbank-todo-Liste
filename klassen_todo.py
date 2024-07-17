@@ -187,17 +187,17 @@ class Team:
 class Aufgaben:
     # Standartwert None um Argumentenübergabe bei Aufruf zu verkürzen
     def __init__(self, aufgaben_id, 
-                 aufgaben_name = None, 
-                 aufgaben_beschreibung = None, 
+                 aufgaben_name = None,  
                  projekt_id = None, 
+                 aufgaben_beschreibung = None,
                  mitarbeiter_id = None, 
                  status = None, 
                  erstellungsdatum = None, 
                  faelligkeit = None):
         self.aufgaben_id = aufgaben_id
         self.aufgaben_name = aufgaben_name
-        self.aufgaben_beschreibung = aufgaben_beschreibung
         self.projekt_id = projekt_id
+        self.aufgaben_beschreibung = aufgaben_beschreibung
         self.mitarbeiter_id = mitarbeiter_id
         self.status = status
         self.erstellungsdatum = erstellungsdatum 
@@ -239,7 +239,8 @@ class Aufgaben:
                     self.aufgaben_table.c.projekt_id == self.projekt_id)
             
             pd.read_sql(query, con)
- 
+    
+    
     # Definition UPDATE 
     def update(self):
         with self.sa_eng.connect() as con:
@@ -274,7 +275,7 @@ class Aufgaben:
 
             # Update-Statement mit den aktualisierten Werten
             upd = self.aufgaben_table.update().where(
-                self.aufgaben_table.c.aufgaben_id == self.aufgaben_id).values(updated_values)
+                    self.aufgaben_table.c.aufgaben_id == self.aufgaben_id).values(updated_values)
 
             con.execute(upd)
             print(f"Die Aufgabe '{updated_values['aufgaben_name']}' wurde erfolgreich in der Tabelle aktualisiert.")

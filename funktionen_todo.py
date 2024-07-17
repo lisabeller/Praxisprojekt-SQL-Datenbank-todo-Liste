@@ -147,8 +147,8 @@ def display_table(tabellen_name):
     with sa_eng.connect() as con:
         try:
             # Versuche, die Tabelle aus der Datenbank abzurufen
-            tabelle = pd.read_sql(tabellen_name, con)
-            tabelle
+            tabelle = pd.read_sql(tabellen_name, con).reset_index(drop=True)
+            return tabelle
         except sa.exc.NoSuchTableError as e:
             # Falls die Tabelle nicht existiert, gib eine Fehlermeldung aus
             print(f"Die Tabelle '{tabellen_name}' existiert nicht in der Datenbank.")
