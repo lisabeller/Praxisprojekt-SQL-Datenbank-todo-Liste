@@ -19,7 +19,8 @@ def main():
     menu = ['Home', 
             'Projekte',
             'Aufgaben',  
-            'Team']
+            'Team',
+            'Log-Tabellen']
     
     choice = st.sidebar.selectbox('Menu', menu)
 
@@ -241,6 +242,16 @@ def main():
                 team = kla.Team(selected_mitarbeiter_id)
                 team.delete()
                 st.success('Mitglied erfolgreich gelöscht')
+
+    elif choice == 'Log-Tabellen':
+        st.subheader('Log-Tabellen')
+
+        # Log-Tabellen-Auswahl
+        log_table = st.selectbox("Wähle eine Log-Tabelle", ['aufgaben_log', 'projekte_log', 'team_log'])
+
+        # Tabelle anzeigen
+        table = func.display_table(log_table)
+        st.dataframe(table)
            
 
 # Main-Funktion aufrufen
