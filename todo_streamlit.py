@@ -1,5 +1,5 @@
 # Ausführen des Skripts in Kommandozeile (Miniconda)
-# cd "PFAD"
+# cd "C:\Users\Admin\Git\Praxisprojekt_todo\todo"
 # conda activate DataCraft
 # streamlit run  todo_streamlit.py
 
@@ -103,8 +103,18 @@ def main():
             status_options = ['Offen', 'In Bearbeitug', 'Erledigt']
             status = st.selectbox('Status', status_options)
 
+            # Selectbox mit vorhanden Mitarbeiter-IDs
+            team_table = func.display_table('team')
+            mitarbeiter_ids = team_table['mitarbeiter_id'].tolist()
+            selected_mitarbeiter_id = st.selectbox('Mitarbeiter ID', mitarbeiter_ids)
+
             if st.button('Aufgabe hinzufügen'):
-                aufgabe = kla.Aufgabe(None, selected_projekt_id, aufgabenname, beschreibung, status)
+                aufgabe = kla.Aufgabe(None, 
+                                      projekt_id = selected_projekt_id, 
+                                      mitarbeiter_id = selected_mitarbeiter_id,
+                                      aufgaben_name = aufgabenname, 
+                                      beschreibung = beschreibung, 
+                                      status = status)
                 aufgabe.insert()
                 st.success('Aufgabe erfolgreich hinzugefügt')
 
@@ -117,6 +127,11 @@ def main():
 
             aufgabenname = st.text_input('Aufgabenname', aufgaben_details['aufgaben_name'])
             beschreibung = st.text_area('Beschreibung', aufgaben_details['aufgaben_beschreibung'])
+
+            # Selectbox mit vorhanden Mitarbeiter-IDs
+            team_table = func.display_table('team')
+            mitarbeiter_ids = team_table['mitarbeiter_id'].tolist()
+            selected_mitarbeiter_id = st.selectbox('Mitarbeiter ID', mitarbeiter_ids)
     
             # Definieren der Status-Optionen
             status_options = ['Offen', 'In Bearbeitung', 'Erledigt']
@@ -131,7 +146,12 @@ def main():
             status = st.selectbox('Status', status_options, index=default_index)
 
             if st.button('Aufgabe bearbeiten'):
-                aufgabe = kla.Aufgaben(selected_aufgabe_id, aufgaben_table['projekt_id'], aufgabenname, beschreibung, status)
+                aufgabe = kla.Aufgaben(aufgaben_id = selected_aufgabe_id, 
+                                       aufgaben_name = aufgabenname, 
+                                       projekt_id = str(aufgaben_details['projekt_id']), 
+                                       mitarbeiter_id = selected_mitarbeiter_id, 
+                                       aufgaben_beschreibung = beschreibung, 
+                                       status = status)
                 aufgabe.update()
                 st.success('Aufgabe erfolgreich bearbeitet')
                 
