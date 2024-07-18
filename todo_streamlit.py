@@ -117,13 +117,17 @@ def main():
 
         elif subchoice == 'Aufgabe hinzufügen':
             st.subheader('Aufgabe hinzufügen')
+
             projekt_table = func.display_table('projekte')
             projekt_ids = projekt_table['projekt_id'].tolist()
             selected_projekt_id = st.selectbox('Wähle ein Projekt aus', projekt_ids)
+
             aufgabenname = st.text_input('Aufgabenname')
             beschreibung = st.text_area('Beschreibung')
             status_options = ['Offen', 'In Bearbeitug', 'Erledigt']
             status = st.selectbox('Status', status_options)
+
+            enddatum = st.date_input('Faellig am')
 
             # Selectbox mit vorhanden Mitarbeiter-IDs
             team_table = func.display_table('team')
@@ -131,12 +135,14 @@ def main():
             selected_mitarbeiter_id = st.selectbox('Mitarbeiter ID', mitarbeiter_ids)
 
             if st.button('Aufgabe hinzufügen'):
-                aufgabe = kla.Aufgabe(None, 
+                aufgabe = kla.Aufgaben(None, 
                                       projekt_id = selected_projekt_id, 
                                       mitarbeiter_id = selected_mitarbeiter_id,
                                       aufgaben_name = aufgabenname, 
-                                      beschreibung = beschreibung, 
-                                      status = status)
+                                      aufgaben_beschreibung = beschreibung,
+                                      status = status, 
+                                      faelligkeit= enddatum )
+                
                 aufgabe.insert()
                 st.success('Aufgabe erfolgreich hinzugefügt')
 
