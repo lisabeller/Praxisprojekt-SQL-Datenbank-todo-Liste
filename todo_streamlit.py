@@ -7,6 +7,7 @@
 import streamlit as st
 
 import pandas as pd
+import sqlalchemy as sa 
 
 import funktionen_todo as func
 import klassen_todo as kla
@@ -27,6 +28,11 @@ def main():
     if choice == 'Home':
         st.subheader('Home')
         st.write('Willkommen im Projekt Management System')
+
+        # Überblick Projekte/Aufgaben
+        aufgaben_df = func.get_all_aufgaben()
+        st.dataframe(aufgaben_df)
+
 
     # SUBMENU PROJEKTE
     elif choice == 'Projekte':
@@ -71,15 +77,30 @@ def main():
 
         elif subchoice == 'Projekt löschen':
             st.subheader('Projekt löschen')
+
+            # Dropdown zur Auswahl eines Projekts
             projekt_table = func.display_table('projekte')
             projekt_ids = projekt_table['projekt_id'].tolist()
             selected_projekt_id = st.selectbox('Wähle ein Projekt aus', projekt_ids)
+
+            # Details des ausgewählten Projekts abrufen
             projekt_details = projekt_table[projekt_table['projekt_id'] == selected_projekt_id].iloc[0]
 
             if st.button('Projekt löschen'):
                 projekt = kla.Projekt(selected_projekt_id)
-                projekt.delete()
-                st.success('Projekt erfolgreich gelöscht')
+
+                 # Abfrage, ob noch Aufgaben mit dem Projekt verknüpft sind
+                with projekt.sa_eng.connect() as con:
+                    query = sa.text('SELECT COUNT(*) FROM aufgaben WHERE projekt_id = :projekt_id')
+                    result = con.execute(query, {'projekt_id': selected_projekt_id}).fetchone()
+                    count_tasks = result[0]
+        
+                if count_tasks > 0:
+                    st.warning(f"Das Projekt {projekt_details['projekt_name']} kann nicht gelöscht werden, da noch {count_tasks} Aufgaben damit verknüpft sind.")
+                else:
+                    projekt.delete()
+                    st.success(f"Das Projekt {projekt_details['projekt_name']} wurde erfolgreich gelöscht")
+            
 
 
     #SUBMENU AUFGBAEN
@@ -149,7 +170,7 @@ def main():
             if st.button('Aufgabe bearbeiten'):
                 aufgabe = kla.Aufgaben(aufgaben_id = selected_aufgabe_id, 
                                        aufgaben_name = aufgabenname, 
-                                       projekt_id = str(aufgaben_details['projekt_id']), 
+                                       projekt_id = int(aufgaben_details['projekt_id']), 
                                        mitarbeiter_id = selected_mitarbeiter_id, 
                                        aufgaben_beschreibung = beschreibung, 
                                        status = status)

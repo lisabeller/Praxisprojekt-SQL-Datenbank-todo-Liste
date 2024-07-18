@@ -60,6 +60,7 @@ def get_all_aufgaben():
         SELECT 
             a.aufgaben_id,
             a.aufgaben_name,
+            p.projekt_id,
             p.projekt_name,
             t.vorname || ' ' || t.nachname AS mitarbeiter_name,
             a.aufgaben_beschreibung,
@@ -76,7 +77,11 @@ def get_all_aufgaben():
         result = con.execute(query).fetchall()
     
     if result:
-        df = pd.DataFrame(result, columns=['Aufgaben ID', 'Aufgabe', 'Projekt', 'Mitarbeiter', 'Aufgaben Beschreibung', 'Status'])
+        df = pd.DataFrame(result, columns=['Aufgaben ID', 'Aufgabe', 
+                                           'Projekt Id', 'Projekt', 
+                                           'Mitarbeiter', 'Aufgaben Beschreibung', 
+                                           'Status']) 
+        df.reset_index(drop=True, inplace=True)  # Index zurücksetzen
         return df
     else:
         return print("Keine Aufgaben gefunden.")
