@@ -65,4 +65,4 @@ Klasse Aufgaben
 - Trigger Funktionen für Insert, Update und Delete auf den Projekten, Aufgaben und Team-Tabellen
 - Änderungen werden in den Log-Tabellen gespeichern
 
-
+Copyright Lisa Beller, 2024-07-18
