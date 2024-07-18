@@ -1,7 +1,7 @@
 # Ausführen des Skripts in Kommandozeile (Miniconda)
-# cd "C:\Users\Admin\Git\Praxisprojekt_todo\todo"
-# conda activate DataCraft
-# streamlit run  todo_streamlit.py
+# cd "Dateipfad"
+# conda activate "Umgebung"
+# streamlit run  "Dateiname"
 
 # IMPORTE
 import streamlit as st
