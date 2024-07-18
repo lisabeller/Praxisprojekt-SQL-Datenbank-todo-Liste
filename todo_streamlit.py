@@ -285,8 +285,4 @@ def main():
 if __name__ == '__main__':
     main()
 
-
-# TO DOs(optional)
-# Funktion Status ändern
-# Aufgabe bearbeiten, Fehler finden!!
-# get_all_aufgaben() auf der Startseite als Überblick
+# ENDE SKRIPT
