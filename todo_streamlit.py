@@ -31,7 +31,7 @@ def main():
 
         # Überblick Projekte/Aufgaben
         aufgaben_df = func.get_all_aufgaben()
-        st.dataframe(aufgaben_df)
+        st.dataframe(aufgaben_df,hide_index=True)
 
 
     # SUBMENU PROJEKTE
@@ -44,7 +44,7 @@ def main():
 
         if subchoice == 'Projektübersicht':
             projekt_table = func.display_table('projekte')
-            st.dataframe(projekt_table)
+            st.dataframe(projekt_table,hide_index=True)
 
         elif subchoice == 'Projekt hinzufügen':
             st.subheader('Projekt hinzufügen')
@@ -113,7 +113,7 @@ def main():
 
         if subchoice == 'Aufgaben anzeigen':
             aufgaben_table = func.display_table('aufgaben')
-            st.dataframe(aufgaben_table)
+            st.dataframe(aufgaben_table,hide_index=True)
 
         elif subchoice == 'Aufgabe hinzufügen':
             st.subheader('Aufgabe hinzufügen')
@@ -201,7 +201,7 @@ def main():
 
         if subchoice == 'Team anzeigen':
             team_table = func.display_table('team')
-            st.dataframe(team_table)
+            st.dataframe(team_table,hide_index=True)
 
         elif subchoice == 'Infos':
             st.subheader('Informationen')
@@ -214,7 +214,7 @@ def main():
             if st.button('Info anzeigen'):
                 mitarbeiter_info = func.get_info(selected_mitarbeiter_id)
                 if isinstance(mitarbeiter_info, pd.DataFrame):
-                     st.dataframe(mitarbeiter_info)
+                     st.dataframe(mitarbeiter_info,hide_index=True)
                 else:
                     st.write(mitarbeiter_info)
             
@@ -272,7 +272,7 @@ def main():
 
         # Tabelle anzeigen
         table = func.display_table(log_table)
-        st.dataframe(table)
+        st.dataframe(table,hide_index=True)
            
 
 # Main-Funktion aufrufen
